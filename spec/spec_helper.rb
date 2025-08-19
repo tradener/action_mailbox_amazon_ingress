@@ -1,11 +1,12 @@
 # frozen_string_literal: true
 
 require 'bundler/setup'
+require 'logger'
+require 'rails'
+require 'action_controller/railtie'
 require 'action_mailbox_amazon_ingress'
 require 'devpack'
 require 'webmock/rspec'
-require 'rails'
-require 'action_controller/railtie'
 require 'rspec/rails'
 require 'rspec/its'
 require 'action_mailbox_amazon_ingress/rspec'
