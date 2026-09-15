@@ -35,6 +35,7 @@ RSpec.describe 'rspec' do
 
       it 'delivers an email to inbox' do
         amazon_ingress_deliver_email(mail: Mail.new(to: 'user@example.com'))
+
         expect(ActionMailbox::InboundEmail.last.mail.recipients).to eql ['user@example.com']
       end
     end
@@ -59,6 +60,18 @@ RSpec.describe 'rspec' do
         expect(ActionMailbox::InboundEmail.last.mail.recipients).to contain_exactly(
           'user@example.com', 'bcc_user@example.com'
         )
+      end
+    end
+
+    context 'when the notification has no email content' do
+      let(:topic) { 'topic:arn:default' }
+
+      it 'renders 400 Bad Request without creating an inbound email' do
+        expect do
+          amazon_ingress_deliver_email(message_params: { 'content' => nil })
+        end.not_to change(ActionMailbox::InboundEmail, :count)
+
+        expect(response).to have_http_status :bad_request
       end
     end
   end
