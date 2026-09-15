@@ -16,7 +16,7 @@ ENV['SECRET_KEY_BASE'] = 'test-secret-key-base'
 
 require File.join(__dir__, 'support', 'dummy', 'config', 'environment.rb')
 
-ActiveRecord::Base.connection.migration_context.migrate
+ActiveRecord::Base.connection_pool.migration_context.migrate
 
 module FixtureHelper
   def fixture(name, type)
